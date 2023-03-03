@@ -1,0 +1,106 @@
+<div class="container-fluid p-5 bg-secondary d-flex flex-column justify-content-around align-items-center h-100">
+  <form class="row container-fluid">
+    <div class="col-sm-3">
+      <label for="exampleFormControlInput1" class="form-label">Tipo de Veiculo:</label>
+      <select id="tipoVeiculo"  (change)="onMarcaVeiculoChange($event)" class="form-select" aria-label="Default select example">
+        <option selected></option>
+        <option *ngFor="let listaVeiculo of listaVeiculos" [value]="listaVeiculo.nome">{{listaVeiculo.nome}}</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label for="exampleFormControlInput1"  class="form-label">Marca:</label>
+      <select id="marca" class="form-select" (change)="onModeloVeiculoChange($event)"  aria-label="Default select example">
+        <option selected></option>
+        <option *ngFor="let marca of marcas" [value]="marca.codigo">{{marca.nome}}</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label for="exampleFormControlInput1"  class="form-label">Modelo:</label>
+      <select id="modelo" class="form-select" (change)="onAnoVeiculoChange($event)" aria-label="Default select example">
+        <option selected></option>
+        <option *ngFor="let modelo of modelos" [value]="modelo.codigo">{{modelo.nome}}</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label for="exampleFormControlInput1"  class="form-label">Ano:</label>
+      <select class="form-select" (change)="onResultsVeiculoChange($event)" aria-label="Default select example">
+        <option selected></option>
+        <option *ngFor="let ano of anos" [value]="ano.codigo">{{ano.nome}}</option>
+      </select>
+    </div>
+    <div class="col-sm-9" >
+      <label for="exampleFormControlInput1" class="form-label">Valor da Venda</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1">
+    </div>
+    <div class="col-sm-3 d-flex align-items-end mt-auto">
+      <button (click)="onButtonClick()" type="submit" class="btn btn-primary form-control" [disabled]="loading">
+        <span *ngIf="!loading">Consultar</span>
+        <span *ngIf="loading">Carregando...</span>
+
+      </button>
+      <div class="spinner-border" role="status">
+        <span *ngIf="loading" class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </form>
+
+  <nav class="container-fluid bg-light ">
+    <ul class="row p-5">
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Marca:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.Marca }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Modelo:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.Modelo }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Ano:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.AnoModelo }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Codigo FIPE:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.CodigoFipe }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Mes de Referencia:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.MesReferencia }}</span>
+        </div>
+      </li>
+
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Valor pela FIPE:</label>
+          <span *ngIf="marcaResults">{{ marcaResults.Valor }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">Valor do veiculo:</label>
+          <span >{{ valorVeiculo }}</span>
+        </div>
+      </li>
+      <li class="list-group-item disabled col-sm-3" aria-disabled="true">
+        <div class="">
+          <label for="exampleFormControlInput1" class="form-label">{{statusValor}}FIPE:</label>
+          <span>0.05%</span>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+</div>
+
+
+
+
+
