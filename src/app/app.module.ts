@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { FormComponent } from './shared/components/form/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './shared/components/main/main.component';
 
 @NgModule({
@@ -25,7 +25,7 @@ import { MainComponent } from './shared/components/main/main.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

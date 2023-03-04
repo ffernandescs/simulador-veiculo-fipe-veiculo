@@ -4,7 +4,6 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faSpinner, faMask,  } from '@fortawesome/free-solid-svg-icons';
 
 
-
 @NgModule({
   exports: [FontAwesomeModule],
 })
