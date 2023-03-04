@@ -1,13 +1,28 @@
-.form-control {
+.form-control, .button-control {
   border-radius: 6px;
   height: 3rem;
   outline: none;
   transition: transform 0.2s ease-in-out;
-  margin: 15px 0 15px 0;
+}
+
+
+input {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+
 }
 
 input:hover {
   transform: scale(1) !important;
+}
+
+.input-group-text {
+  border: none;
+  border-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
 }
 
 .form-control:hover {
@@ -54,15 +69,28 @@ input:hover {
   background-repeat: no-repeat;
   background-position: right center;
   transform: scale(1);
-  background: no-repeat #50469c;
+  background-color: #50469c;
   color: rgba(255, 255, 255, .27);
   border: none;
 }
 
-.btn-success {
+.btn:disabled {
+  background-color: #ff7b54;
+}
+
+.btn-danger:focus {
+  background-color: #ff7c54ac;
+}
+
+.btn-danger:hover {
+  background-color: #ff7c54ac;
+}
+
+.btn-danger {
   background-color: #ff7b54;
   box-shadow: 0 5px 12px rgb(255 123 84 / 29%);
   animation: .3s;
+  color: #FFF;
 }
 nav {
   overflow: hidden;

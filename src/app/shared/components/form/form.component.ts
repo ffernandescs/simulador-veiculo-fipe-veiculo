@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class FormComponent {
 
-  listaVeiculos = [{nome: "Carros"}, {nome: "Motos"}, {nome: "Caminhoes"}];
+  listaVeiculos = [{nome: "carros"}, {nome: "motos"}, {nome: "caminhoes"}];
   marcas: TypesMarcas[] = [];
   modelos: TypesModelos[] = []
   anos: TypesAnos[] = []

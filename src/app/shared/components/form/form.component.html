@@ -1,6 +1,6 @@
 <div class="container p-5 d-flex flex-column justify-content-around align-items-center h-100">
   <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" #formDir="ngForm" class="form-group row container-fluid">
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <select
         id="tipoVeiculo"
         class="form-control"
@@ -20,7 +20,7 @@
       <div *ngIf="tipo " class="validation-error">
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <select
         id="marca"
         class="form-control "
@@ -40,7 +40,7 @@
         </option>
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <select
         id="modelo"
         class="form-control "
@@ -59,7 +59,7 @@
       </option>
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <select
         class="form-control"
         (change)="onResultsVeiculoChange($event)"
@@ -76,30 +76,29 @@
           [value]="ano.codigo">{{ano.nome}}</option>
       </select>
     </div>
-    <div class="input-group col-md-9">
-      <div class="input-group-prepend">
-        <span class="input-group-text">R$</span>
+    <div class="d-flex col-md-9 my-3">
+      <div class="input-group-prepend ">
+        <span class="input-group-text bg-light fw-bold h-100" id="basic-addon1">R$</span>
       </div>
       <input
-        type="text"
-        class="form-control"
-        id="valor"
-        placeholder="Digite o valor da venda"
-        formControlName="valor"
-        [ngClass]="{
-          'is-valid': valorInput === '',
-          'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
-        required
-      >
+          type="text"
+          class="form-control"
+          id="valor"
+          placeholder="Digite o valor da venda"
+          formControlName="valor"
+          [ngClass]="{
+            'is-valid': valorInput === '',
+            'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
+          required
+        >
     </div>
-
-    <div class="col-md-3 d-flex align-items-end mt-auto">
-      <button  type="reset" class="btn btn-danger form-control" [disabled]="loading">
-        <span *ngIf="!loading">Limpar</span>
+    <div class="col-md-3 my-3">
+      <button type="reset" class="btn btn-light button-control w-100">
+        <span >Limpar</span>
       </button>
     </div>
-    <div class="col-md-7 d-flex align-items-center justify-content-center w-100">
-      <button type="submit" class="btn btn-success form-control w-50" [disabled]="loading">
+    <div class="col-md-6 my-3 d-flex justify-content-center w-100">
+      <button type="submit" class="btn btn-danger button-control w-50" [disabled]="loading">
         <span *ngIf="!loading">Consultar</span>
         <span *ngIf="loading">Carregando...</span>
       </button>
