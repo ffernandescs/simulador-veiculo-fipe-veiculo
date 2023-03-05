@@ -1,0 +1,110 @@
+<!--<nav class="container-fluid d-flex bg-white p-0 position-relative">
+  <ul class=" w-50 p-4 m-0">
+    <li class="list-group-item" aria-disabled="true">
+      <div class="d-flex">
+        <label class="form-label fw-bold">Marca:</label>
+        <span class="px-2" *ngIf="marcaResults">{{ marcaResults.Marca }}</span>
+      </div>
+    </li>
+    <li class="list-group-item" aria-disabled="true">
+      <div class="pt-2 d-flex">
+        <label class="form-label fw-bold">Modelo:</label>
+        <span class="py-8 px-2" *ngIf="marcaResults">{{ marcaResults.Modelo }}</span>
+      </div>
+    </li>
+    <li class="list-group-item" aria-disabled="true">
+      <div class="pt-2 d-flex">
+        <label class="form-label fw-bold">Ano:</label>
+        <span class="px-2" *ngIf="marcaResults">{{ marcaResults.AnoModelo }}</span>
+      </div>
+    </li>
+    <li class="list-group-item" aria-disabled="true">
+      <div class="pt-2 d-flex">
+        <label class="form-label fw-bold">Codigo FIPE:</label>
+        <span class="px-2" *ngIf="marcaResults">{{ marcaResults.CodigoFipe }}</span>
+      </div>
+    </li>
+    <li class="list-group-item" aria-disabled="true">
+      <div class="pt-2 d-flex">
+        <label class="form-label fw-bold">Mes de Referencia:</label>
+        <span class="px-2" *ngIf="marcaResults">{{ marcaResults.MesReferencia }}</span>
+      </div>
+    </li>
+    <li class="list-group-item" aria-disabled="true">
+      <div class="pt-2 d-flex">
+        <label class="form-label fw-bold">Valor do veiculo:</label>
+        <span class="px-2" >{{ valorVeiculo }}</span>
+      </div>
+    </li>
+  </ul>
+  <div class=" w-50">
+    <div class="card-body p-4 bg-light d-flex flex-column h-50">
+      <label class="form-label">Valor pela FIPE:</label>
+      <span class="h1 fw-bold" *ngIf="marcaResults">{{ marcaResults.Valor }}</span>
+    </div>
+    <div class="card-body p-4 bg-success d-flex flex-column h-50">
+      <label class="form-label">{{statusValor}}</label>
+      <span class="h1 fw-bold ">{{statusPercentual}}</span>
+    </div>
+
+  </div>
+  <div *ngIf="loading" class=" d-flex flex-column justify-content-center align-items-center w-100 h-100 position-absolute top-0 start-0" style="background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(2px);" role="status">
+    <div class="spinner-border ">
+      <span  class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</nav><-->
+
+<main class="main">
+  <div class="container">
+    <div class="row principal ">
+      <div class="col-8 ">
+        <div class="card h-100 p-3">
+          <div class="card-header">Resultados</div>
+          <ul class="list-group list-group-flush ">
+            <li class=" d-flex flex-column list-group-item">
+              <p class="m-0">Marca:</p>
+              <h5 class="m-0">Ford</h5>
+            </li>
+            <li class=" d-flex flex-column list-group-item">
+              <p class="m-0">Modelo:</p>
+              <h5 class="m-0">Ecosport</h5>
+            </li>
+            <li class=" d-flex flex-column list-group-item">
+              <p class="m-0">Ano do modelo:</p>
+              <h5 class="m-0">2019</h5>
+            </li>
+            <li class=" d-flex flex-column list-group-item">
+              <p class="m-0">Código FIPE:</p>
+              <h5 class="m-0">055340-6</h5>
+            </li>
+            <li class=" d-flex flex-column list-group-item">
+              <p class="m-0">Mes de referencia:</p>
+              <h5 class="m-0">01/2023</h5>
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="row d-flex h-100">
+          <div class="card p-3 mb-3 col-12">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h5 class="card-title">Primary card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div class="card p-3 col-12">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h5 class="card-title">Primary card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

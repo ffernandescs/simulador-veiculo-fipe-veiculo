@@ -1,15 +1,43 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 .form-control, .button-control {
   border-radius: 6px;
   height: 3rem;
   outline: none;
   transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.form-control:hover {
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.1);
+}
+
+.form-control:disabled {
+  cursor: not-allowed;
+  background-repeat: no-repeat;
+  background-position: right center;
+  transform: scale(1);
+  background-color: #50469c;
+  color: rgba(255, 255, 255, .27);
+  border: none;
+  background-image: none;
+}
+
+.title {
+  font-size: 2rem;
+  color: #ff7b54;
+  margin-top: 1rem;
 }
 
 
 input {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+}
 
+.my-input::placeholder {
+  color: rgba(255, 255, 255, .27);
 }
 
 input:hover {
@@ -25,73 +53,22 @@ input:hover {
   padding-right: 1.3rem;
 }
 
-.form-control:hover {
-  transition: transform 0.2s ease-in-out;
-  transform: scale(1.1);
-}
-
-.valid-feedback {
-  padding-top: 0.25rem;
-  font-size: 0.875rem;
-  color: #198754;
-}
-
-.form-select-success.is-valid ~ .valid-feedback {
-  display: block;
-  animation: slide-down 0.3s ease-in-out;
-}
-
-.selected {
-  transition: transform 0.2s ease-in-out;
-  transform: scale(1.1);
-}
-
-.is-invalid {
-  border: 2px solid #dc3545;
-}
-
-
-@keyframes slide-down {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.form-control:hover {
-  cursor: pointer;
-}
-
-.form-control:disabled {
-  cursor: not-allowed;
-  background-repeat: no-repeat;
-  background-position: right center;
-  transform: scale(1);
-  background-color: #50469c;
-  color: rgba(255, 255, 255, .27);
-  border: none;
-}
-
-.btn:disabled {
-  background-color: #ff7b54;
-}
-
-.btn-danger:focus {
-  background-color: #ff7c54ac;
-}
-
-.btn-danger:hover {
-  background-color: #ff7c54ac;
-}
-
 .btn-danger {
   background-color: #ff7b54;
   box-shadow: 0 5px 12px rgb(255 123 84 / 29%);
   animation: .3s;
   color: #FFF;
 }
+
+.msg-erro {
+  color: #dc3545;
+  font-size: 1rem;
+  clear: both;
+  position: relative;
+}
+
+
+
 nav {
   overflow: hidden;
   border-radius: 6px;
@@ -102,5 +79,4 @@ nav {
 li {
   width: 100%;
 }
-
 

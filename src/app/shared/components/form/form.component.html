@@ -1,15 +1,15 @@
-<div class="container p-5 d-flex flex-column justify-content-around align-items-center h-100">
-  <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" #formDir="ngForm" class="form-group row container-fluid">
-    <div class="col-md-3 my-3">
+<div class="container d-flex flex-column justify-content-around align-items-center h-100" style="z-index: 5; position: relative;">
+  <div class="title">Simulador de preco tabela FIPE</div>
+  <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" class="form-group row container-fluid  p-4">
+    <div class="col-md-3 my-3" *ngFor="let erro of mensagens.tipo">
       <select
         id="tipoVeiculo"
-        class="form-control"
+        class="form-control form-select"
         (change)="onMarcaVeiculoChange($event)"
         formControlName="tipo"
         [ngClass]="{
-          'is-valid': tipoVeiculoSelect !== '',
-          'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
-        required
+          'is-valid' : momentForm.get('tipo')?.valid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched),
+          'is-invalid': momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)}"
       >
         <option selected value="">Selecione o Tipo</option>
         <option
@@ -17,21 +17,21 @@
           [value]="listaVeiculo.nome">{{listaVeiculo.nome}}
         </option>
       </select>
-      <div *ngIf="tipo " class="validation-error">
+      <div  class="validation-error">
+        <span class="msg-erro" *ngIf="momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)">
+          {{erro.menssagem}}
+        </span>
       </div>
     </div>
-    <div class="col-md-3 my-3">
+    <div class="col-md-3 my-3" *ngFor="let erro of mensagens.marca">
       <select
         id="marca"
-        class="form-control "
+        class="form-control form-select"
         (change)="onModeloVeiculoChange($event)"
-        [ngClass]="{
-          'disabled-icon': tipoVeiculoSelect === '',
-          'selected' : tipoMarcaloSelect === '',
-          'is-valid': tipoMarcaloSelect !== '',
-          'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
         formControlName="marca"
-        required
+        [ngClass]="{
+          'is-valid' : momentForm.get('marca')?.valid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched),
+          'is-invalid': momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)}"
       >
         <option selected value="">Selecione a Marca</option>
         <option
@@ -39,133 +39,87 @@
           [value]="marca.codigo">{{marca.nome}}
         </option>
       </select>
+      <div class="validation-error">
+        <span class="msg-erro" *ngIf="momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)">
+          {{erro.menssagem}}
+        </span>
+      </div>
     </div>
-    <div class="col-md-3 my-3">
+    <div class="col-md-3 my-3" *ngFor="let erro of mensagens.modelo">
       <select
         id="modelo"
-        class="form-control "
+        class="form-control form-select "
         (change)="onAnoVeiculoChange($event)"
-        [ngClass]="{
-          'selected' : tipoModelSelect === 0,
-          'is-valid': tipoModelSelect !== 0,
-          'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
         formControlName="modelo"
-        required
-      >
-      <option selected value="">Selecione o Modelo</option>
-      <option
-        *ngFor="let modelo of modelos"
-        [value]="modelo.codigo">{{modelo.nome}}
-      </option>
-      </select>
-    </div>
-    <div class="col-md-3 my-3">
-      <select
-        class="form-control"
-        (change)="onResultsVeiculoChange($event)"
         [ngClass]="{
-          'selected' : tipoAnoloSelect === '',
-          'is-valid': tipoAnoloSelect !== '',
-          'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
+          'is-valid' : momentForm.get('modelo')?.valid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched),
+          'is-invalid': momentForm.get('modelo')?.invalid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched)}"
+      >
+        <option selected value="">Selecione o Modelo</option>
+        <option
+          *ngFor="let modelo of modelos"
+          [value]="modelo.codigo">{{modelo.nome}}
+        </option>
+      </select>
+      <div class="validation-error">
+        <span class="msg-erro" *ngIf="momentForm.get('modelo')?.invalid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched)">
+          {{erro.menssagem}}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3 my-3" *ngFor="let erro of mensagens.ano">
+      <select
+        class="form-control form-select"
+        (change)="onResultsVeiculoChange($event)"
         formControlName="ano"
-        required
+        [ngClass]="{
+          'is-valid' : momentForm.get('ano')?.valid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched),
+          'is-invalid': momentForm.get('ano')?.invalid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched)}"
         >
         <option selected value="">Selecione o Ano</option>
         <option
           *ngFor="let ano of anos"
           [value]="ano.codigo">{{ano.nome}}</option>
       </select>
-    </div>
-    <div class="d-flex col-md-9 my-3">
-      <div class="input-group-prepend ">
-        <span class="input-group-text bg-light fw-bold h-100" id="basic-addon1">R$</span>
+      <div class="validation-error">
+        <span class="msg-erro" *ngIf="momentForm.get('ano')?.invalid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched)">
+          {{erro.menssagem}}
+        </span>
       </div>
-      <input
-          type="text"
-          class="form-control"
-          id="valor"
-          placeholder="Digite o valor da venda"
-          formControlName="valor"
-          [ngClass]="{
-            'is-valid': valorInput === '',
-            'is-invalid': formEnviado && (tipo?.value ?? '') === ''}"
-          required
-        >
+    </div>
+    <div class="col-md-9 my-3" *ngFor="let erro of mensagens.valor">
+      <div class="d-flex">
+        <div class="input-group-prepend ">
+          <span class="input-group-text bg-light fw-bold h-100" id="basic-addon1">R$</span>
+        </div>
+        <input
+            type="text"
+            class="form-control my-input"
+            id="valor"
+            placeholder="Digite o valor da venda"
+            formControlName="valor"
+            [ngClass]="{
+              'is-valid' : momentForm.get('valor')?.valid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched),
+              'is-invalid': momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)}"
+          >
+      </div>
+
+        <div class="validation-error">
+          <span class="msg-erro" *ngIf="momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)">
+            {{erro.menssagem}}
+          </span>
+        </div>
     </div>
     <div class="col-md-3 my-3">
-      <button type="reset" class="btn btn-light button-control w-100">
+      <button (click)="resetForm()" type="button" class="btn btn-light button-control w-100" [disabled]="disableLimpar"r>
         <span >Limpar</span>
       </button>
     </div>
     <div class="col-md-6 my-3 d-flex justify-content-center w-100">
-      <button type="submit" class="btn btn-danger button-control w-50" [disabled]="loading">
+      <button id="btnConsultar" type="submit" class="btn btn-danger button-control w-50" [disabled]="disableConsultar">
         <span *ngIf="!loading">Consultar</span>
         <span *ngIf="loading">Carregando...</span>
       </button>
     </div>
   </form>
-
-  <nav class="container-fluid d-flex bg-white p-0 position-relative">
-    <ul class=" w-50 p-4 m-0">
-      <li class="list-group-item" aria-disabled="true">
-        <div class="d-flex">
-          <label class="form-label fw-bold">Marca:</label>
-          <span class="px-2" *ngIf="marcaResults">{{ marcaResults.Marca }}</span>
-        </div>
-      </li>
-      <li class="list-group-item" aria-disabled="true">
-        <div class="pt-2 d-flex">
-          <label class="form-label fw-bold">Modelo:</label>
-          <span class="py-8 px-2" *ngIf="marcaResults">{{ marcaResults.Modelo }}</span>
-        </div>
-      </li>
-      <li class="list-group-item" aria-disabled="true">
-        <div class="pt-2 d-flex">
-          <label class="form-label fw-bold">Ano:</label>
-          <span class="px-2" *ngIf="marcaResults">{{ marcaResults.AnoModelo }}</span>
-        </div>
-      </li>
-      <li class="list-group-item" aria-disabled="true">
-        <div class="pt-2 d-flex">
-          <label class="form-label fw-bold">Codigo FIPE:</label>
-          <span class="px-2" *ngIf="marcaResults">{{ marcaResults.CodigoFipe }}</span>
-        </div>
-      </li>
-      <li class="list-group-item" aria-disabled="true">
-        <div class="pt-2 d-flex">
-          <label class="form-label fw-bold">Mes de Referencia:</label>
-          <span class="px-2" *ngIf="marcaResults">{{ marcaResults.MesReferencia }}</span>
-        </div>
-      </li>
-      <li class="list-group-item" aria-disabled="true">
-        <div class="pt-2 d-flex">
-          <label class="form-label fw-bold">Valor do veiculo:</label>
-          <span class="px-2" >{{ valorVeiculo }}</span>
-        </div>
-      </li>
-    </ul>
-    <div class=" w-50">
-      <div class="card-body p-4 bg-light d-flex flex-column h-50">
-        <label class="form-label">Valor pela FIPE:</label>
-        <span class="h1 fw-bold" *ngIf="marcaResults">{{ marcaResults.Valor }}</span>
-      </div>
-      <div class="card-body p-4 bg-success d-flex flex-column h-50">
-        <label class="form-label">{{statusValor}}</label>
-        <span class="h1 fw-bold ">{{statusPercentual}}</span>
-      </div>
-
-    </div>
-    <div *ngIf="loading" class=" d-flex flex-column justify-content-center align-items-center w-100 h-100 position-absolute top-0 start-0" style="background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(2px);" role="status">
-      <div class="spinner-border ">
-        <span  class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  </nav>
 </div>
-
-
-
-
-
-
-

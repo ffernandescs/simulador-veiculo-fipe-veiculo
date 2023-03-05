@@ -10,6 +10,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { FormComponent } from './shared/components/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './shared/components/main/main.component';
+import { MainResultComponent } from './shared/components/nav-result/main-result.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MainComponent } from './shared/components/main/main.component';
     NavBarComponent,
     FooterComponent,
     FormComponent,
-    MainComponent
+    MainComponent,
+    MainResultComponent
   ],
   imports: [
     BrowserModule,

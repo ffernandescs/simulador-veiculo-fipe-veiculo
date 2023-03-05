@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TypesAnos } from 'src/app/interfaces/type/TypesAnos';
 import { TypesMarcas } from 'src/app/interfaces/type/TypesMarcas';
@@ -36,31 +36,65 @@ export class FormComponent {
 
   formEnviado: boolean = false;
 
-  select2Ativa: boolean = false;
-
   momentForm!: FormGroup;
 
+  mensagens = {
+    tipo: [
+      {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
+    ],
+    marca: [
+      {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
+    ],
+    modelo: [
+      {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
+    ],
+    ano: [
+      {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
+    ],
+    valor: [
+      {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
+    ]
+  }
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder) { }
-  onMomentForm() {
+  disableLimpar = true;
+  disableConsultar = true;
+
+
+
+
+  constructor(private apiService: ApiService, private formBuilder: FormBuilder) {
     this.momentForm = this.formBuilder.group({
-      tipo: ['', Validators.required],
-      marca: [{value: '', disabled: true}, Validators.required],
-      modelo: [{value: '', disabled: true}, Validators.required],
-      ano: [{value: '', disabled: true}, Validators.required],
-      valor: [{value: '', disabled: true}, Validators.required],
-    });
+      tipo: ['', Validators.compose([ Validators.required])],
+      marca: ['', Validators.compose([ Validators.required])],
+      modelo: ['', Validators.compose([ Validators.required])],
+      ano: ['', Validators.compose([ Validators.required])],
+      valor: ['', Validators.compose([ Validators.required])]
+    })
+
   }
   ngOnInit(): void {
-    this.onMomentForm()
+    this.disableAllFields()
     this.onEnableDisableItemForm()
-
   }
 
-  resetSelects() {
+  disableAllFields() {
+    this.momentForm.get('tipo')?.setValue('');
+    this.momentForm.get('marca')?.disable();
+    this.momentForm.get('modelo')?.disable();
+    this.momentForm.get('ano')?.disable();
+    this.momentForm.get('valor')?.disable();
+  }
+
+  resetForm() {
+    this.disableAllFields()
+  }
+
+  onEnableDisableItemForm(){
     this.momentForm.get('tipo')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('marca')?.enable();
+        this.disableLimpar = false
+
       } else {
         this.momentForm.get('marca')?.disable();
         this.momentForm.get('modelo')?.disable();
@@ -72,26 +106,20 @@ export class FormComponent {
         this.momentForm.get('valor')?.setValue('');
       }
     });
-
-    console.log('Ola Mundao')
-  }
-
-
-  onEnableDisableItemForm(){
-    this.resetSelects()
     this.momentForm.get('marca')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('modelo')?.enable();
       } else {
         this.momentForm.get('modelo')?.disable();
-      }
 
+      }
     });
     this.momentForm.get('modelo')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('ano')?.enable();
       } else {
         this.momentForm.get('ano')?.disable();
+
       }
     });
     this.momentForm.get('ano')?.valueChanges.subscribe((value) => {
@@ -99,30 +127,26 @@ export class FormComponent {
         this.momentForm.get('valor')?.enable();
       } else {
         this.momentForm.get('valor')?.disable();
+
       }
     });
+
+    this.momentForm.get('valor')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.disableConsultar = false
+      } else {
+
+      }
+    });
+
+
+
   }
 
 
-  get tipo() {
-    return this.momentForm.get('tipo')
-  }
 
-  get marca() {
-    return this.momentForm.get('marca')!
-  }
 
-  get modelo() {
-    return this.momentForm.get('modelo')!
-  }
 
-  get ano() {
-    return this.momentForm.get('ano')!
-  }
-
-  get valor() {
-    return this.momentForm.get('valor')!
-  }
 
   onMarcaVeiculoChange(event: any): void {
     const tipoVeiculoSelecionado = event?.target?.value;
@@ -135,10 +159,7 @@ export class FormComponent {
         })
     }
 
-    this.select2Ativa = true;
   }
-
-
 
   onModeloVeiculoChange(event: any): void {
     const codMarca = event.target.value;
@@ -193,7 +214,7 @@ export class FormComponent {
         this.statusPercentual = `${this.statusPercentual = Math.abs(percentual).toFixed(1)}%`
       }
       this.valorVeiculo = valor
-    }, 1000);
+    }, 2000);
   }
 
   onFormSubmit() {
