@@ -9,8 +9,11 @@ import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { FormComponent } from './shared/components/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MainComponent } from './shared/components/main/main.component';
 import { MainResultComponent } from './shared/components/nav-result/main-result.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
+import { NgxCurrencyModule } from "ngx-currency";
+import { AccordionComponent } from './shared/components/accordion/accordion.component';
+
 
 @NgModule({
   declarations: [
@@ -19,15 +22,17 @@ import { MainResultComponent } from './shared/components/nav-result/main-result.
     NavBarComponent,
     FooterComponent,
     FormComponent,
-    MainComponent,
-    MainResultComponent
+    MainResultComponent,
+    LoadingComponent,
+    AccordionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxCurrencyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

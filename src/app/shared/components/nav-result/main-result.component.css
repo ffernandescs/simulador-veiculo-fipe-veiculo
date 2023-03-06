@@ -3,7 +3,6 @@
 .card {
   border: none;
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
-  background-color: #2ECC71;
 }
 .card-header {
   background-color: #FFF;
@@ -11,14 +10,55 @@
   font-size: 1.5rem;
 }
 
+li {
+  height: 70px;
+}
+
 h5, h4 {
   color: #344767;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 h6 {
   color: #67748e;
+  font-size: .90rem;
+  font-weight: 600;
+
+}
+.desfocus-grid1 {
+  display: none;
 }
 
-.arrow-icon {
-  font-size: 4rem;
+.desfocus-grid1.active {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100%);
+  z-index: 2;
+}
+
+
+.desfocar {
+  height: calc(100%);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.loadingResult {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.arrow-icon.active {
+  display: none;
 }

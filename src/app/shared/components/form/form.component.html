@@ -1,6 +1,6 @@
-<div class="container d-flex flex-column justify-content-around align-items-center h-100" style="z-index: 5; position: relative;">
+<div class="container-xxl d-flex flex-column justify-content-around align-items-center h-100 p-0" style="z-index: 5; position: relative;">
   <div class="title">Simulador de preco tabela FIPE</div>
-  <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" class="form-group row container-fluid  p-4">
+  <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" class="form-group row container-fluid">
     <div class="col-md-3 my-3" *ngFor="let erro of mensagens.tipo">
       <select
         id="tipoVeiculo"
@@ -90,14 +90,18 @@
     <div class="col-md-9 my-3" *ngFor="let erro of mensagens.valor">
       <div class="d-flex">
         <div class="input-group-prepend ">
-          <span class="input-group-text bg-light fw-bold h-100" id="basic-addon1">R$</span>
+          <span class="input-group-text bg-secondary fw-bold h-100" id="basic-addon1">R$</span>
         </div>
         <input
             type="text"
             class="form-control my-input"
             id="valor"
+            value="0.00"
             placeholder="Digite o valor da venda"
             formControlName="valor"
+            currencyMask
+            (ngModelChange)="onValorChange($event)"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left' }"
             [ngClass]="{
               'is-valid' : momentForm.get('valor')?.valid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched),
               'is-invalid': momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)}"
@@ -116,10 +120,23 @@
       </button>
     </div>
     <div class="col-md-6 my-3 d-flex justify-content-center w-100">
-      <button id="btnConsultar" type="submit" class="btn btn-danger button-control w-50" [disabled]="disableConsultar">
+      <button id="btnConsultar" type="submit" class="btn button-control w-50" [disabled]="disableConsultar">
         <span *ngIf="!loading">Consultar</span>
-        <span *ngIf="loading">Carregando...</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="loading" class="sr-only px-2">Carregando...</span>
       </button>
     </div>
   </form>
 </div>
+<app-main-result
+id="resultados"
+[marcaResults]="marcaResults"
+[valorVeiculo]="valorVeiculo"
+[statusValor]="statusValor"
+[statusPercentual]="statusPercentual"
+[loading]="loading"
+[desfocarGridResults]="desfocarGridResults"
+
+
+
+></app-main-result>

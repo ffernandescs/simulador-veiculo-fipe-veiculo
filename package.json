@@ -26,6 +26,8 @@
     "event-target-shim": "^6.0.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.3",
+    "ngx-currency": "^2.2.1",
+    "ngx-mask": "^13.1.13",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

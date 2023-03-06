@@ -53,11 +53,16 @@ input:hover {
   padding-right: 1.3rem;
 }
 
-.btn-danger {
+#btnConsultar {
   background-color: #ff7b54;
   box-shadow: 0 5px 12px rgb(255 123 84 / 29%);
   animation: .3s;
   color: #FFF;
+  border: none;
+}
+
+#btnConsultar:hover {
+  background-color: #ff7c54d3;
 }
 
 .msg-erro {
@@ -67,16 +72,18 @@ input:hover {
   position: relative;
 }
 
-
-
 nav {
   overflow: hidden;
   border-radius: 6px;
   padding: 1rem;
-
 }
 
 li {
   width: 100%;
 }
 
+@media (max-width: 772px) {
+  #btnConsultar {
+    width: 100% !important;
+  }
+}
