@@ -19,7 +19,6 @@ export class FormComponent {
   modelos: TypesModelos[] = []
   anos: TypesAnos[] = []
 
-
   tipoVeiculoSelect: string = ''
   tipoMarcaloSelect: string = ''
   tipoModelSelect: number = 0
@@ -31,13 +30,13 @@ export class FormComponent {
   @Output() valorVeiculo: string = '';
   @Output() statusValor: string = '';
   @Output() statusPercentual: number = 0;
+  @Output() statusPercentualInt: number = 0;
+  @Output() statusPercentualText: string = ''
 
   valorFIPE:string = '';
 
   @Output() loading: boolean = false;
   @Output() desfocarGridResults: boolean = false
-
-
 
   formEnviado: boolean = false;
 
@@ -64,9 +63,6 @@ export class FormComponent {
   disableLimpar = true;
   disableConsultar = true;
 
-
-
-
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
@@ -79,8 +75,8 @@ export class FormComponent {
       ano: ['', Validators.compose([ Validators.required])],
       valor: ['', Validators.compose([ Validators.required])]
     })
-
   }
+
   ngOnInit(): void {
     this.disableAllFields()
     this.onEnableDisableItemForm()
@@ -101,7 +97,6 @@ export class FormComponent {
   resetForm() {
     this.disableAllFields()
     this.disableConsultar = true
-
   }
 
   onEnableDisableItemForm(){
@@ -149,10 +144,7 @@ export class FormComponent {
     this.momentForm.get('valor')?.valueChanges.subscribe((value) => {
       if (value) {
         this.disableConsultar = false
-      } else {
-
       }
-
     });
   }
 
@@ -164,7 +156,7 @@ export class FormComponent {
       this.apiService.getMarca(tipoVeiculoSelecionado)
         .subscribe(data => {
           this.marcas = data;
-        })
+      })
     }
   }
 
@@ -176,7 +168,7 @@ export class FormComponent {
       this.apiService.getModeloVeiculo(this.tipoVeiculoSelect, codMarca)
         .subscribe(data => {
           this.modelos = data.modelos;
-        });
+      });
     }
   }
 
@@ -198,7 +190,6 @@ export class FormComponent {
 
   }
 
-
   calcResult() {
     this.loading = true;
     this.desfocarGridResults = true
@@ -211,41 +202,55 @@ export class FormComponent {
       const valorVenda = parseFloat(this.valorFIPE.replace("R$", "").replace(",", "."));
 
       const percentual = ((calcV - valorVenda) / valorVenda) * 100;
-      if(percentual > 2) {
+      if(percentual > 2 && percentual == 100) {
         this.statusValor = `Valor de venda acima do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
+        this.statusPercentualInt = this.statusPercentual
+        this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
+
       } else if(percentual < -2) {
         this.statusValor = `Valor de venda abaixo do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
-      } else {
-        this.statusValor = `Valor de venda dentro da média do mercado`
-        this.statusPercentual = parseFloat(Math.abs(percentual).toFixed(1))
+        this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
+        this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
+      } else if(percentual > 100) {
+        this.statusValor = `Valor de venda acima do mercado`
+        this.statusPercentual = parseFloat(percentual.toFixed(1))
+        this.statusPercentualInt = this.statusPercentual
+        this.statusPercentualText = `+${this.statusPercentual.toFixed(1).toString()}`
+        console.log(this.statusPercentualText)
+
+      }else {
+        this.statusValor = `Valor de venda dentro da média do mercado`
+        this.statusPercentual = parseFloat(percentual.toFixed(1))
+        this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
+        this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
       }
       this.valorVeiculo = `R$ ${valor}`
       this.loading = false;
       this.desfocarGridResults = false
     }, 2000);
-
-
   }
 
-
   onFormSubmit() {
-
     this.formEnviado = true
-    this.apiService.getResultados(this.tipoVeiculoSelect, this.tipoMarcaloSelect, this.tipoModelSelect, this.tipoAnoloSelect)
+    this.apiService.getResultados(
+      this.tipoVeiculoSelect,
+      this.tipoMarcaloSelect,
+      this.tipoModelSelect,
+      this.tipoAnoloSelect)
     .subscribe(res => {
       this.marcaResults = res
       this.valorFIPE = res.Valor
     });
-    this.calcResult()
+
     if (window.innerWidth < 992) {
       setTimeout(() => {
-        this.viewportScroller.scrollToAnchor('resultados');
-      }, 2000)
+        this.viewportScroller.scrollToAnchor('resultados')
+        }, 2000)
+      }
+    this.calcResult()
     }
-
   }
-}
 

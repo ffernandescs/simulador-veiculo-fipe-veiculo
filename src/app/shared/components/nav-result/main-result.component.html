@@ -35,9 +35,9 @@
           </ul>
         </div>
       </div>
-      <div class="col-12 col-lg-5">
-        <div class="row gy-4" style="height: calc(100% - 1.5rem);">
-          <div class="col-12" style="height: calc(45%);">
+      <div class="col-12 col-lg-5 d-flex align-items-stretch">
+        <div class="row gy-4 ">
+          <div class="col-12">
             <div class="card bg-white p-2 h-100">
               <div class="desfocus-grid1" [ngClass]="{'active': desfocarGridResults}">
                 <div class="desfocar "></div>
@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" style="height: calc(55%);">
+          <div class="col-12 ">
             <div class="card bg-white p-2 h-100">
               <div class="desfocus-grid1" [ngClass]="{'active': desfocarGridResults}">
                 <div class="desfocar "></div>
@@ -64,31 +64,35 @@
               <div class="card-body row">
                 <div class="col-12" >
                   <div class="row">
-                    <div class="col-9 h-25">
+                    <div class="col-7 h-25">
                       <h6 class="card-title">Valor simulado</h6>
                       <h2 class="card-title">{{ valorVeiculo }}</h2>
                     </div>
-                    <div class="col-3 d-flex align-items-center justify-content-center"
-                      [ngClass]="{
-                        'bg-success': statusPercentual >= 2,
-                        'bg-danger': statusPercentual < -2,
-                        'bg-warning': statusPercentual > -2 && statusPercentual <= 2}"
-                      style="width: inherit; padding: 2px 8px 2px 12px; border-radius: 50%; font-size: 1.3rem; width: 6.5rem; height: 6.5rem;"
-                    >
-                      <h4 class="card-text mb-0 text-white" >{{ statusPercentual }}%</h4>
+                    <div class="col-5 d-flex justify-content-end align-items-star">
+                      <circle-progress  class="teste"
+                        [percent]="statusPercentualInt"
+                        [outerStrokeColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
+                        [animation]="true"
+                        [showSubtitle]="false"
+                        [unitsColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
+                        [titleColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
+                        [animationDuration]="300"
+                        [title]="statusPercentualText"
+                      >
+                      </circle-progress>
                     </div>
                   </div>
                 </div>
                 <div class="col-12 ">
                   <div class="h-100 d-flex align-items-center justify-content-between">
-                    <div class="col-9 d-flex align-items-center">
+                    <div class="col-12 d-flex align-items-center">
                       <h5
                         class="card-title mb-0"
                         [ngClass]="{
                           'text-success': statusPercentual >= 2,
                           'text-danger': statusPercentual < -2,
                           'text-warning': statusPercentual > -2 && statusPercentual <= 2}"
-                        >{{ statusValor }}
+                        >Valor de venda abaixo do mercado
                         <span
                         class="arrow-icon mx-2"
                         [ngClass]="{

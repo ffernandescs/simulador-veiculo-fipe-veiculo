@@ -11,12 +11,17 @@ export class MainResultComponent {
   @Input() marcaResults: TypesResults | null = null;
   @Input() valorVeiculo: string = '';
   @Input() statusValor: string = '';
-  @Input() statusPercentual: number = 0;
+
+  @Input() statusPercentual: number = 0
+  @Input() statusPercentualInt: number = 0
+  @Input() statusPercentualText: string = ''
   @Input() loading: boolean = false
   @Input() desfocarGridResults: boolean = false;
 
+  percentualStringTitleCircle: string = '10'
 
+  ngOnInit(): void {
+    console.log(this.percentualStringTitleCircle = this.statusPercentual.toString())
+  }
 
-
-  percentual = this.statusPercentual
 }
