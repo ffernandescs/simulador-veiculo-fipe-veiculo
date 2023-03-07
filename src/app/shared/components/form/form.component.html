@@ -1,12 +1,13 @@
 <div class="container-xxl d-flex flex-column justify-content-around align-items-center h-100 p-0" style="z-index: 5; position: relative;">
   <div class="title">Simulador de preco tabela FIPE</div>
-  <form (ngSubmit)="onFormSubmit()" [formGroup]="momentForm" class="form-group row container-fluid">
+  <form (ngSubmit)="onResultsVeicul()" [formGroup]="momentForm" class="form-group row container-fluid">
     <div class="col-md-3 my-3" *ngFor="let erro of mensagens.tipo">
       <select
         id="tipoVeiculo"
         class="form-control form-select"
-        (change)="onMarcaVeiculoChange($event)"
+        (change)="onMarcaVeiculoChange()"
         formControlName="tipo"
+        [(ngModel)]="tipoVeiculoSelect"
         [ngClass]="{
           'is-valid' : momentForm.get('tipo')?.valid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched),
           'is-invalid': momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)}"
@@ -27,8 +28,9 @@
       <select
         id="marca"
         class="form-control form-select"
-        (change)="onModeloVeiculoChange($event)"
+        (change)="onModeloVeiculoChange()"
         formControlName="marca"
+        [(ngModel)]="tipoMarcaloSelect"
         [ngClass]="{
           'is-valid' : momentForm.get('marca')?.valid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched),
           'is-invalid': momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)}"
@@ -47,9 +49,10 @@
     </div>
     <div class="col-md-3 my-3" *ngFor="let erro of mensagens.modelo">
       <select
-        id="modelo"
-        class="form-control form-select "
-        (change)="onAnoVeiculoChange($event)"
+        id="marca"
+        class="form-control form-select"
+        (change)="onAnoVeiculoChange()"
+        [(ngModel)]="tipoModelSelect"
         formControlName="modelo"
         [ngClass]="{
           'is-valid' : momentForm.get('modelo')?.valid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched),
@@ -67,10 +70,12 @@
         </span>
       </div>
     </div>
+
+
     <div class="col-md-3 my-3" *ngFor="let erro of mensagens.ano">
       <select
         class="form-control form-select"
-        (change)="onResultsVeiculoChange($event)"
+        [(ngModel)]="tipoAnoloSelect"
         formControlName="ano"
         [ngClass]="{
           'is-valid' : momentForm.get('ano')?.valid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched),
@@ -100,7 +105,6 @@
             placeholder="Digite o valor da venda"
             formControlName="valor"
             currencyMask
-            (ngModelChange)="onValorChange($event)"
             [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left' }"
             [ngClass]="{
               'is-valid' : momentForm.get('valor')?.valid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched),

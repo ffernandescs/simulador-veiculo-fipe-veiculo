@@ -23,8 +23,6 @@ export class FormComponent {
   tipoMarcaloSelect: string = ''
   tipoModelSelect: number = 0
   tipoAnoloSelect: string = ''
-  valorInput: string = 'R$' + ''
-  valoInput2: string = '';
 
   @Output() marcaResults: TypesResults | null = null;
   @Output() valorVeiculo: string = '';
@@ -38,7 +36,6 @@ export class FormComponent {
   @Output() loading: boolean = false;
   @Output() desfocarGridResults: boolean = false
 
-  formEnviado: boolean = false;
 
   momentForm!: FormGroup;
 
@@ -90,110 +87,131 @@ export class FormComponent {
     this.momentForm.get('valor')?.disable();
   }
 
-  onValorChange(event: string) {
-    this.valoInput2 = event
-  }
-
   resetForm() {
     this.disableAllFields()
     this.disableConsultar = true
   }
 
+
+
   onEnableDisableItemForm(){
     this.momentForm.get('tipo')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('marca')?.enable();
-        this.momentForm.get('marca')?.setValue('');
         this.disableLimpar = false
-
       } else {
         this.momentForm.get('marca')?.disable();
         this.momentForm.get('modelo')?.disable();
         this.momentForm.get('ano')?.disable();
-        this.momentForm.get('valor')?.disable();
+        this.momentForm.get('valor')?.setValue('');
         this.momentForm.get('marca')?.setValue('');
         this.momentForm.get('modelo')?.setValue('');
         this.momentForm.get('ano')?.setValue('');
         this.momentForm.get('valor')?.setValue('');
+        this.disableLimpar = true
+        this.disableConsultar = true;
       }
     });
+
     this.momentForm.get('marca')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('modelo')?.enable();
-        this.momentForm.get('modelo')?.setValue('');
       } else {
         this.momentForm.get('modelo')?.disable();
+        this.momentForm.get('ano')?.disable();
+        this.momentForm.get('valor')?.disable();
+        this.momentForm.get('modelo')?.setValue('');
+        this.momentForm.get('ano')?.setValue('');
+        this.momentForm.get('valor')?.setValue('');
+        this.disableConsultar = true;
+
       }
     });
+
     this.momentForm.get('modelo')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('ano')?.enable();
-        this.momentForm.get('ano')?.setValue('');
       } else {
         this.momentForm.get('ano')?.disable();
+        this.momentForm.get('valor')?.disable();
+        this.momentForm.get('ano')?.setValue('');
+        this.momentForm.get('valor')?.setValue('');
+        this.disableConsultar = true;
+
       }
     });
+
     this.momentForm.get('ano')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('valor')?.enable();
       } else {
         this.momentForm.get('valor')?.disable();
+
+        this.disableConsultar = true;
       }
     });
 
     this.momentForm.get('valor')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.disableConsultar = false
+        this.disableConsultar = false;
       }
     });
+
   }
 
-  onMarcaVeiculoChange(event: any): void {
-    const tipoVeiculoSelecionado = event?.target?.value;
-    this.tipoVeiculoSelect = tipoVeiculoSelecionado
-
-    if (tipoVeiculoSelecionado) {
-      this.apiService.getMarca(tipoVeiculoSelecionado)
+  /* Função onMarcaVeiculoChange capitura o valor ao selecionar o Select Tipo,
+  atraveis da variavel tipoVeiculo e passa por parametro atraveis da funcao getMarca
+  onde e preenchida a api: API_PATH}/{tipoVeiculo}/marcas
+  que ira retornar a lista de marcas de acordo com o tipo*/
+  onMarcaVeiculoChange(){
+    if (this.tipoVeiculoSelect) {
+      this.apiService.getMarca(this.tipoVeiculoSelect)
         .subscribe(data => {
           this.marcas = data;
       })
     }
   }
 
-  onModeloVeiculoChange(event: any): void {
-    const codMarca = event.target.value;
-    this.tipoMarcaloSelect = codMarca
+ /* Função onModeloVeiculoChange capitura o valor ao selecionar o Select Marca,
+  atraveis da variavel tipoMarcaloSelect e passa por parametro atraveis da funcao getModeloVeiculo
+  junto com a variavel tipoVeiculoSelect onde e preenchida a api:
+  API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos
+  que ira retornar a lista de modelos de acordo com a marca*/
 
-    if (codMarca) {
-      this.apiService.getModeloVeiculo(this.tipoVeiculoSelect, codMarca)
+  onModeloVeiculoChange() {
+    if (this.tipoMarcaloSelect) {
+      this.apiService.getModeloVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect)
         .subscribe(data => {
           this.modelos = data.modelos;
       });
     }
   }
 
-  onAnoVeiculoChange(event: any): void {
-    const codModelo = event.target.value;
-    this.tipoModelSelect = codModelo
+  /* Função onAnoVeiculoChange capitura o valor ao selecionar o Select Modelos,
+  atraveis da variavel tipoModelSelect e passa por parametro atraveis da funcao getAnoVeiculo
+  junto com a variavel tipoVeiculoSelect e tipoMarcaloSelect onde e preenchida a api:
+  API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos/{codModelo}/anos
+  que ira retornar a lista de anos de acordo com o modelo*/
 
-    if (codModelo) {
-      this.apiService.getAnoVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect, codModelo)
+  onAnoVeiculoChange() {
+    if (this.tipoModelSelect) {
+      this.apiService.getAnoVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect, this.tipoModelSelect)
         .subscribe(data => {
           this.anos = data;
         });
     }
   }
 
-  onResultsVeiculoChange(event: any): void {
-    const codAno = event.target.value;
-    this.tipoAnoloSelect = codAno
+ /* Função calcResult capitura o valor ao selecionar o Select Marca,
+  atraveis da variavel tipoMarcaloSelect e passa por parametro atraveis da funcao getModeloVeiculo
+  junto com a variavel tipoVeiculoSelect onde e preenchida a api:
+  API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos
+  que ira retornar a lista de modelos de acordo com a marca*/
 
-  }
 
   calcResult() {
     this.loading = true;
     this.desfocarGridResults = true
-
     setTimeout(() => {
 
       const inputValor = document.querySelector('#valor') as HTMLInputElement;
@@ -233,8 +251,16 @@ export class FormComponent {
     }, 2000);
   }
 
-  onFormSubmit() {
-    this.formEnviado = true
+  /* Função onResultsVeicul passa para a função getResultados atraveis de parametros
+  todos os valores selecionados nos selects atraveis dos parametros tipoVeiculoSelect,
+  tipoMarcaloSelect, tipoModelSelect e tipoAnoloSelect e faz a consulta na api:
+  API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos/{codAno}
+  que ira retornar a lista de resultados de acordo com os valores de pesquisa.
+  Tambem criei uma condicao de tela para quando a largura for menor que 992px
+  ao clicar no botao consultar ele rola o scroll para a tela de resultados
+  e em seguida ira chamar a função calcular*/
+  onResultsVeicul() {
+
     this.apiService.getResultados(
       this.tipoVeiculoSelect,
       this.tipoMarcaloSelect,

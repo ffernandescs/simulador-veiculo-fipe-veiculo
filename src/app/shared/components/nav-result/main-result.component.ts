@@ -24,4 +24,6 @@ export class MainResultComponent {
     console.log(this.percentualStringTitleCircle = this.statusPercentual.toString())
   }
 
+
+
 }
