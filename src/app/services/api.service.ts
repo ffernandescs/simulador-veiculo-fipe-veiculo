@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_PATH, environment } from '../environments/environment.prod';
+import { API_PATH } from '../environments/environment';
 import { TypesMarcas } from '../interfaces/type/TypesMarcas';
 import { Observable } from 'rxjs';
 import { TypesModelos } from '../interfaces/type/TypesModelos';
@@ -15,7 +15,6 @@ export class ApiService {
   private readonly API = API_PATH
 
   constructor(private httpClient: HttpClient) { }
-
 
   /*Função recebe o valor da variavel lista (listaVeiculos) no component forms
   e passa para api onde retorna a lista de marcas*/
