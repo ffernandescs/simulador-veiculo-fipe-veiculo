@@ -1,10 +1,28 @@
-<header>
-  <nav class="navbar" style="background-color: #FFFFFF;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-        Bootstrap
+<nav class="navbar bg-light navbar-expand-lg bg-body-tertiary">
+  <div class="container px-4">
+    <a routerLink="/">
+      <img class="mx-3" src="../../../../assets/img/logo.png" alt="" width="50">
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="menuHamburger = !menuHamburger">
+      <span class="navbar-toggler-icon" [ngClass]="{'bi bi-list': menuHamburger, 'bi bi-x': !menuHamburger}"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <a class="nav-link active" aria-current="page" routerLink="/">
+        <i class=" bi bi-house-door-fill" style="padding-right: .60rem"></i>
+        Inicio
+      </a>
+      <a class="nav-link" routerLink="/simulador">
+        <i class="bi bi-car-front-fill" style="padding-right: .60rem"></i>
+        Simular venda de veiculo
       </a>
     </div>
-  </nav>
-</header>
+  </div>
+</nav>

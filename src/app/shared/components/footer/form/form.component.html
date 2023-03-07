@@ -1,0 +1,153 @@
+
+<div style="position: relative;">
+  <div class="fundo">
+  </div>
+  <div class="container d-flex flex-column justify-content-around align-items-center h-100 p-0" style="z-index: 5; position: relative;">
+    <div class="title text-center">
+      <h3>Simulador de venda de veículos</h3>
+    </div>
+    <form (ngSubmit)="onResultsVeicul()" [formGroup]="momentForm" class="form-group row container-fluid">
+      <div class="col-md-3 my-3" *ngFor="let erro of mensagens.tipo">
+        <select
+          id="tipoVeiculo"
+          class="form-control form-select"
+          (change)="onMarcaVeiculoChange()"
+          formControlName="tipo"
+          [(ngModel)]="tipoVeiculoSelect"
+          [ngClass]="{
+            'is-valid' : momentForm.get('tipo')?.valid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched),
+            'is-invalid': momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)}"
+        >
+          <option selected value="">Selecione o tipo</option>
+          <option
+            *ngFor="let listaVeiculo of listaVeiculos"
+            [value]="listaVeiculo.nome">{{listaVeiculo.nome}}
+          </option>
+        </select>
+        <div  class="validation-error">
+          <span class="msg-erro" *ngIf="momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)">
+            {{erro.menssagem}}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 my-3" *ngFor="let erro of mensagens.marca">
+        <select
+          id="marca"
+          class="form-control form-select"
+          (change)="onModeloVeiculoChange()"
+          formControlName="marca"
+          [(ngModel)]="tipoMarcaloSelect"
+          [ngClass]="{
+            'is-valid' : momentForm.get('marca')?.valid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched),
+            'is-invalid': momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)}"
+        >
+          <option selected value="">Selecione a marca</option>
+          <option
+            *ngFor="let marca of marcas"
+            [value]="marca.codigo">{{marca.nome}}
+          </option>
+        </select>
+        <div class="validation-error">
+          <span class="msg-erro" *ngIf="momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)">
+            {{erro.menssagem}}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 my-3" *ngFor="let erro of mensagens.modelo">
+        <select
+          id="marca"
+          class="form-control form-select"
+          (change)="onAnoVeiculoChange()"
+          [(ngModel)]="tipoModelSelect"
+          formControlName="modelo"
+          [ngClass]="{
+            'is-valid' : momentForm.get('modelo')?.valid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched),
+            'is-invalid': momentForm.get('modelo')?.invalid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched)}"
+        >
+          <option selected value="">Selecione o modelo</option>
+          <option
+            *ngFor="let modelo of modelos"
+            [value]="modelo.codigo">{{modelo.nome}}
+          </option>
+        </select>
+        <div class="validation-error">
+          <span class="msg-erro" *ngIf="momentForm.get('modelo')?.invalid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched)">
+            {{erro.menssagem}}
+          </span>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 my-3" *ngFor="let erro of mensagens.ano">
+        <select
+          class="form-control form-select"
+          [(ngModel)]="tipoAnoloSelect"
+          formControlName="ano"
+          [ngClass]="{
+            'is-valid' : momentForm.get('ano')?.valid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched),
+            'is-invalid': momentForm.get('ano')?.invalid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched)}"
+          >
+          <option selected value="">Selecione o ano</option>
+          <option
+            *ngFor="let ano of anos"
+            [value]="ano.codigo">{{ano.nome}}</option>
+        </select>
+        <div class="validation-error">
+          <span class="msg-erro" *ngIf="momentForm.get('ano')?.invalid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched)">
+            {{erro.menssagem}}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-9 my-3" *ngFor="let erro of mensagens.valor">
+        <div class="d-flex" style="position: relative;">
+          <div class="input-group-prepend h-100" style="position: absolute; top: 0; left: 0; z-index: 5;">
+            <span class="input-group-text bg-secondary fw-bold h-100" id="basic-addon1">R$</span>
+          </div>
+          <input
+              type="text"
+              class="form-control"
+              style="transform: scale(1);"
+              id="valor"
+              value=""
+              placeholder="Digite o valor da venda"
+              formControlName="valor"
+              currencyMask
+              [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left' }"
+              [ngClass]="{
+                'is-valid' : momentForm.get('valor')?.valid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched),
+                'is-invalid': momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)}"
+            >
+        </div>
+          <div class="validation-error">
+            <span class="msg-erro" *ngIf="momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)">
+              {{erro.menssagem}}
+            </span>
+          </div>
+      </div>
+      <div class="col-md-3 my-3">
+        <button (click)="resetForm()" id="btnClear" type="button" class="btn btn-light button-control w-100" [disabled]="disableLimpar"r>
+          <span >Limpar</span>
+        </button>
+      </div>
+      <div class="col-md-6 my-3 d-flex justify-content-center w-100">
+        <button id="btnConsult" type="submit" class="button-control w-50" [disabled]="disableConsultar">
+          <span *ngIf="!loading">Consultar</span>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="loading" class="sr-only px-2">Carregando...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-main-result
+  id="resultados"
+  [marcaResults]="marcaResults"
+  [valorVeiculo]="valorVeiculo"
+  [statusValor]="statusValor"
+  [statusPercentual]="statusPercentual"
+  [statusPercentualInt]="statusPercentualInt"
+  [statusPercentualText]="statusPercentualText"
+  [desfocarGridResults]="desfocarGridResults"
+>
+</app-main-result>
+<app-accordion></app-accordion>

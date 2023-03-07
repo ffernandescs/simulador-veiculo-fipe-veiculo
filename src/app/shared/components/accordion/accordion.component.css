@@ -12,7 +12,12 @@
 
 .accordion-button:not(.collapsed) {
   background-color: #eae8e8bc;
-  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-button:focus {
+  box-shadow: none !important;
+  outline: none !important;
+  color: #0c63e4;
 }
 
 h6 {

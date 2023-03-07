@@ -1,0 +1,49 @@
+p, h6 {
+  color: #67748e !important;
+}
+
+.bg-secondary {
+  background-color: #3B337D !important;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.carousel-inner {
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+  border-radius: 1rem !important;
+}
+
+.btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3B337D;
+  border: none;
+  padding: .65rem 2rem;
+}
+
+.btn:hover {
+  background-color: #38307ee2;
+}
+
+.carousel-indicators button {
+  background-color:#F8F9FA ;
+  border: 1px solid #3B337D;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+}
+
+.carousel-indicators .active {
+  background-color: #3B337D !important;
+}
+
+.card-body {
+  border: none;
+}
+
+@media (max-width: 992px) {
+  .btn {
+    position: initial;
+    margin-top: 1rem;
+  }
+}

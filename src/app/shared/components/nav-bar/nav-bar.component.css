@@ -1,0 +1,24 @@
+.navbar {
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.navbar-toggler.show .nav-link {
+  border-bottom: 1px solid #bab9b9b4;
+  color: #67748e;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #67748e !important;
+}
+
+.nav-link:hover {
+  color: #26498f !important;
+}
+
+.bi-list, .bi-x {
+  font-size: 2rem;
+  height: inherit;
+}
+

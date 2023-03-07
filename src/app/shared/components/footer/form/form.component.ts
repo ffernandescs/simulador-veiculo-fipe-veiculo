@@ -180,6 +180,7 @@ export class FormComponent {
   desabilitando e zerando os valores */
   resetForm() {
     this.onEnableDisableItemForm()
+    this.momentForm.get('tipo')?.setValue('');
     this.momentForm.get('marca')?.disable();
     this.momentForm.get('marca')?.setValue('');
     this.momentForm.get('modelo')?.disable();
