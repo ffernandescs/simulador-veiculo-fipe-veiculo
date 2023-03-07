@@ -5,7 +5,7 @@
       relative;">
         <div class="desfocus-grid1 px-2" style="width: 100%;" [ngClass]="{'active': desfocarGridResults}">
           <div class="desfocar"></div>
-          <div class=" loadingResult m-4">
+          <div class=" loadingResult m-0">
             <app-loading></app-loading>
           </div>
         </div>
@@ -29,7 +29,7 @@
               <h5 *ngIf="marcaResults">{{ marcaResults.CodigoFipe }}</h5>
             </li>
             <li class=" d-flex flex-column list-group-item">
-              <h6 class="my-1">Mes de referencia:</h6>
+              <h6 class="my-1">Mês de referência:</h6>
               <h5 *ngIf="marcaResults">{{ marcaResults.MesReferencia }}</h5>
             </li>
           </ul>
@@ -41,13 +41,13 @@
             <div class="card bg-white p-2 h-100">
               <div class="desfocus-grid1" [ngClass]="{'active': desfocarGridResults}">
                 <div class="desfocar "></div>
-                <div class=" loadingResult m-4">
+                <div class=" loadingResult m-0">
                   <app-loading></app-loading>
                 </div>
               </div>
-              <div class="card-header bg-transparent">Preço de veiculo tabela FIPE</div>
+              <div class="card-header bg-transparent">Preço de veículo tabela FIPE</div>
               <div class="card-body">
-                <h6 class="card-title">Valor medio</h6>
+                <h6 class="card-title">Valor médio</h6>
                 <h2 class="card-text" *ngIf="marcaResults">{{ marcaResults.Valor }}</h2>
               </div>
             </div>
@@ -56,11 +56,11 @@
             <div class="card bg-white p-2 h-100">
               <div class="desfocus-grid1" [ngClass]="{'active': desfocarGridResults}">
                 <div class="desfocar "></div>
-                <div class=" loadingResult m-4">
+                <div class=" loadingResult m-0">
                   <app-loading></app-loading>
                 </div>
               </div>
-              <div class="card-header bg-transparent">Preço de venda de veiculo</div>
+              <div class="card-header bg-transparent">Preço de venda de veículo</div>
               <div class="card-body row">
                 <div class="col-12" >
                   <div class="row">
@@ -71,12 +71,11 @@
                     <div class="col-5 d-flex justify-content-end align-items-star">
                       <circle-progress  class="teste"
                         [percent]="statusPercentualInt"
-                        [outerStrokeColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
+                        [outerStrokeColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#0069D9' : '#0069D9'"
                         [animation]="true"
                         [showSubtitle]="false"
-                        [unitsColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
-                        [titleColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#FFC107' : '#FFC107'"
-                        [animationDuration]="300"
+                        [unitsColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#0069D9' : '#0069D9'"
+                        [titleColor]="statusPercentual >= 2 ? '#28A745' : statusPercentual < -2 ? '#DC3545' :  statusPercentual >= -2 && statusPercentual <= 2 ? '#0069D9' : '#0069D9'"
                         [title]="statusPercentualText"
                       >
                       </circle-progress>
@@ -91,8 +90,8 @@
                         [ngClass]="{
                           'text-success': statusPercentual >= 2,
                           'text-danger': statusPercentual < -2,
-                          'text-warning': statusPercentual > -2 && statusPercentual <= 2}"
-                        >Valor de venda abaixo do mercado
+                          'text-primary': statusPercentual > -2 && statusPercentual <= 2}"
+                        > {{statusValor}}
                         <span
                         class="arrow-icon mx-2"
                         [ngClass]="{
@@ -101,7 +100,8 @@
                           'bi bi-check-circle-fill': statusPercentual >= -2 && statusPercentual <= 2,
                           'text-success': statusPercentual >= 2,
                           'text-danger': statusPercentual < -2,
-                          'text-warning': statusPercentual > -2 && statusPercentual <= 2
+                          'text-primary': statusPercentual > -2 && statusPercentual <= 2,
+                          'd-none': !statusPercentual
                         }
                           ">
                       </span>

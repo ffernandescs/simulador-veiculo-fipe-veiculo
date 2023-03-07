@@ -1,7 +1,8 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ViewportScroller } from '@angular/common';
+
 import { TypesAnos } from 'src/app/interfaces/type/TypesAnos';
 import { TypesMarcas } from 'src/app/interfaces/type/TypesMarcas';
 import { TypesModelos } from 'src/app/interfaces/type/TypesModelos';
@@ -21,24 +22,44 @@ export class FormComponent {
 
   tipoVeiculoSelect: string = ''
   tipoMarcaloSelect: string = ''
-  tipoModelSelect: number = 0
+  tipoModelSelect: string = ''
+  tipoModelSelectString: string = this.tipoModelSelect.toString()
   tipoAnoloSelect: string = ''
 
+  /*Variavel de resultados, sera enviado para o componente results
+  onde sera exibido o resultado do final da consulta na API*/
   @Output() marcaResults: TypesResults | null = null;
+
+  /*Variavel que armazena valor de venda no componente Input
+  do formulario*/
   @Output() valorVeiculo: string = '';
+
+  /*Variavel que armazena valor da condição na função calcResult
+  onde informa se o valor esta acima, na media ou abaixo da media.*/
   @Output() statusValor: string = '';
+
+  /*Variavel que armazena valor da condição na função calcResult
+  onde é calculado o valor do percentual.*/
   @Output() statusPercentual: number = 0;
+
+  /*Variavel que armazena valor da condição na função calcResult
+  onde é calculado o valor do percentual mais usando o parseInt para
+  receber um valor inteiro, para uso no grafico.*/
   @Output() statusPercentualInt: number = 0;
+
+  /*Variavel que armazena valor da condição na função calcResult
+  onde é calculado o valor do percentual, porem utilizado o toString
+  para conversão de number para string e em seguida exibir o valor no grafico.*/
   @Output() statusPercentualText: string = ''
 
+  /*Variavel que armazena o valor da tabela FIPE na API, e usado na função
+  calcResult para calcular a porcentagem*/
   valorFIPE:string = '';
 
-  @Output() loading: boolean = false;
-  @Output() desfocarGridResults: boolean = false
-
-
+  /*Variavel para utilização do FormGroup*/
   momentForm!: FormGroup;
 
+  /*Variavel para armazenar dados para ser usado na validação de campos*/
   mensagens = {
     tipo: [
       {tipo: 'required', menssagem: '*O campo é obrigatorio.'}
@@ -57,6 +78,14 @@ export class FormComponent {
     ]
   }
 
+  /*Loading para botáo consultar */
+  loading: boolean = false;
+
+  /*Usado junto com o loading para ao clicar em consultar o mesmo desfocar as grid
+  ate que os resultados seja carregados. variavel enviado para o componente results*/
+  @Output() desfocarGridResults: boolean = false
+
+  /*variavel para mudar estado dos botões, para habilitado ou desabilitado */
   disableLimpar = true;
   disableConsultar = true;
 
@@ -65,6 +94,8 @@ export class FormComponent {
     private formBuilder: FormBuilder,
     private viewportScroller: ViewportScroller
     ) {
+
+    /*Usado para criar formulario reativo, com validação de campos*/
     this.momentForm = this.formBuilder.group({
       tipo: ['', Validators.compose([ Validators.required])],
       marca: ['', Validators.compose([ Validators.required])],
@@ -74,26 +105,14 @@ export class FormComponent {
     })
   }
 
+  /*Funçãoo de carregamento de pagina chamando a função onEnableDisableItemForm
+  para desabilitar e redefinir os componentes*/
   ngOnInit(): void {
-    this.disableAllFields()
     this.onEnableDisableItemForm()
   }
-
-  disableAllFields() {
-    this.momentForm.get('tipo')?.setValue('');
-    this.momentForm.get('marca')?.disable();
-    this.momentForm.get('modelo')?.disable();
-    this.momentForm.get('ano')?.disable();
-    this.momentForm.get('valor')?.disable();
-  }
-
-  resetForm() {
-    this.disableAllFields()
-    this.disableConsultar = true
-  }
-
-
-
+  /*Nesta função, foi criado uma condiação para habilitar e desabilitar os componentes
+  e redefinir os valores padrão dos componenets. Quando clicado em um componente, ele ativa
+  o outro e isso de forma crescente e decrescente */
   onEnableDisableItemForm(){
     this.momentForm.get('tipo')?.valueChanges.subscribe((value) => {
       if (value) {
@@ -101,13 +120,12 @@ export class FormComponent {
         this.disableLimpar = false
       } else {
         this.momentForm.get('marca')?.disable();
-        this.momentForm.get('modelo')?.disable();
-        this.momentForm.get('ano')?.disable();
-        this.momentForm.get('valor')?.setValue('');
         this.momentForm.get('marca')?.setValue('');
+        this.momentForm.get('modelo')?.disable();
         this.momentForm.get('modelo')?.setValue('');
+        this.momentForm.get('ano')?.disable();
         this.momentForm.get('ano')?.setValue('');
-        this.momentForm.get('valor')?.setValue('');
+        this.momentForm.get('valor')?.disable();
         this.disableLimpar = true
         this.disableConsultar = true;
       }
@@ -116,37 +134,36 @@ export class FormComponent {
     this.momentForm.get('marca')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('modelo')?.enable();
+        this.disableLimpar = false
       } else {
         this.momentForm.get('modelo')?.disable();
-        this.momentForm.get('ano')?.disable();
-        this.momentForm.get('valor')?.disable();
         this.momentForm.get('modelo')?.setValue('');
+        this.momentForm.get('ano')?.disable();
         this.momentForm.get('ano')?.setValue('');
-        this.momentForm.get('valor')?.setValue('');
+        this.momentForm.get('valor')?.disable();
         this.disableConsultar = true;
-
       }
     });
 
     this.momentForm.get('modelo')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('ano')?.enable();
+        this.disableLimpar = false
       } else {
         this.momentForm.get('ano')?.disable();
-        this.momentForm.get('valor')?.disable();
         this.momentForm.get('ano')?.setValue('');
-        this.momentForm.get('valor')?.setValue('');
+        this.momentForm.get('valor')?.disable();
         this.disableConsultar = true;
-
       }
     });
 
     this.momentForm.get('ano')?.valueChanges.subscribe((value) => {
       if (value) {
         this.momentForm.get('valor')?.enable();
+        this.disableLimpar = false
       } else {
         this.momentForm.get('valor')?.disable();
-
+        this.momentForm.get('valor')?.setValue('');
         this.disableConsultar = true;
       }
     });
@@ -154,9 +171,25 @@ export class FormComponent {
     this.momentForm.get('valor')?.valueChanges.subscribe((value) => {
       if (value) {
         this.disableConsultar = false;
+        this.disableConsultar = false;
       }
     });
+  }
 
+  /*Nesta função reseta os componentes para os valores padrao
+  desabilitando e zerando os valores */
+  resetForm() {
+    this.onEnableDisableItemForm()
+    this.momentForm.get('marca')?.disable();
+    this.momentForm.get('marca')?.setValue('');
+    this.momentForm.get('modelo')?.disable();
+    this.momentForm.get('modelo')?.setValue('');
+    this.momentForm.get('ano')?.disable();
+    this.momentForm.get('ano')?.setValue('');
+    this.momentForm.get('valor')?.disable();
+    this.momentForm.get('valor')?.setValue('');
+    this.disableLimpar = true
+    this.disableConsultar = true;
   }
 
   /* Função onMarcaVeiculoChange capitura o valor ao selecionar o Select Tipo,
@@ -177,7 +210,6 @@ export class FormComponent {
   junto com a variavel tipoVeiculoSelect onde e preenchida a api:
   API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos
   que ira retornar a lista de modelos de acordo com a marca*/
-
   onModeloVeiculoChange() {
     if (this.tipoMarcaloSelect) {
       this.apiService.getModeloVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect)
@@ -192,10 +224,9 @@ export class FormComponent {
   junto com a variavel tipoVeiculoSelect e tipoMarcaloSelect onde e preenchida a api:
   API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos/{codModelo}/anos
   que ira retornar a lista de anos de acordo com o modelo*/
-
   onAnoVeiculoChange() {
     if (this.tipoModelSelect) {
-      this.apiService.getAnoVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect, this.tipoModelSelect)
+      this.apiService.getAnoVeiculo(this.tipoVeiculoSelect, this.tipoMarcaloSelect, parseInt(this.tipoModelSelect))
         .subscribe(data => {
           this.anos = data;
         });
@@ -207,8 +238,6 @@ export class FormComponent {
   junto com a variavel tipoVeiculoSelect onde e preenchida a api:
   API_PATH}/{tipoVeiculo}/marcas/{tipoVeiculo}/{codMArca}/modelos
   que ira retornar a lista de modelos de acordo com a marca*/
-
-
   calcResult() {
     this.loading = true;
     this.desfocarGridResults = true
@@ -221,26 +250,25 @@ export class FormComponent {
 
       const percentual = ((calcV - valorVenda) / valorVenda) * 100;
       if(percentual > 2 && percentual == 100) {
-        this.statusValor = `Valor de venda acima do mercado`
+        this.statusValor = `Valor acima do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = this.statusPercentual
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
       } else if(percentual < -2) {
-        this.statusValor = `Valor de venda abaixo do mercado`
+        this.statusValor = `Valor abaixo do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
       } else if(percentual > 100) {
-        this.statusValor = `Valor de venda acima do mercado`
+        this.statusValor = `Valor acima do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = this.statusPercentual
         this.statusPercentualText = `+${this.statusPercentual.toFixed(1).toString()}`
-        console.log(this.statusPercentualText)
 
       }else {
-        this.statusValor = `Valor de venda dentro da média do mercado`
+        this.statusValor = `Valor dentro da média do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
@@ -260,11 +288,10 @@ export class FormComponent {
   ao clicar no botao consultar ele rola o scroll para a tela de resultados
   e em seguida ira chamar a função calcular*/
   onResultsVeicul() {
-
     this.apiService.getResultados(
       this.tipoVeiculoSelect,
       this.tipoMarcaloSelect,
-      this.tipoModelSelect,
+      parseInt(this.tipoModelSelect),
       this.tipoAnoloSelect)
     .subscribe(res => {
       this.marcaResults = res

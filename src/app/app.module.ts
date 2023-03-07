@@ -45,6 +45,7 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
       "unitsFontSize": "25",
       "titleFontWeight":"800",
       "unitsFontWeight":"800",
+      "animationDuration": 1000,
       "startFromZero": false})
   ],
   providers: [],

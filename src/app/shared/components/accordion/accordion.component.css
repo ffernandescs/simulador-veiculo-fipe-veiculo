@@ -7,12 +7,14 @@
 }
 
 .accordion {
-  color: red;
-
   --bs-accordion-btn-focus-box-shadow: none;
-  --bs-accordion-active-color: #67748e}
+}
 
-  .accordion-button:not(.collapsed) {
-    background-color: #eae8e8bc;
-    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+.accordion-button:not(.collapsed) {
+  background-color: #eae8e8bc;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+h6 {
+  color: #67748e;
 }

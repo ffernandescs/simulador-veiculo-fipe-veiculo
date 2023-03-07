@@ -8,20 +8,28 @@
   cursor: pointer;
 }
 
+.form-control:focus {
+  outline: 2px solid #3B337D;
+  transform: scale(1.04);
+}
+
+
 .form-control:hover {
   transition: transform 0.2s ease-in-out;
-  transform: scale(1.1);
+  transform: scale(1.04);
 }
 
 .form-control:disabled {
   cursor: not-allowed;
-  background-repeat: no-repeat;
-  background-position: right center;
   transform: scale(1);
   background-color: #50469c;
   color: rgba(255, 255, 255, .27);
   border: none;
   background-image: none;
+}
+
+#btnConsultar:disabled {
+  cursor: not-allowed;
 }
 
 .title {
@@ -30,13 +38,11 @@
   margin-top: 1rem;
 }
 
-
 input {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+  padding: 0 0 0 5rem !important;
 }
 
-.my-input::placeholder {
+input::placeholder {
   color: rgba(255, 255, 255, .27);
 }
 
@@ -66,10 +72,8 @@ input:hover {
 }
 
 .msg-erro {
-  color: #dc3545;
+  color: #FFF;
   font-size: 1rem;
-  clear: both;
-  position: relative;
 }
 
 nav {

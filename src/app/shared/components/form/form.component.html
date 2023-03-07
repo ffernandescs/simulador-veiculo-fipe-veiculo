@@ -1,5 +1,8 @@
 <div class="container-xxl d-flex flex-column justify-content-around align-items-center h-100 p-0" style="z-index: 5; position: relative;">
-  <div class="title">Simulador de preco tabela FIPE</div>
+  <div class="title text-center">
+    <h3>Simulador de venda de veículos</h3>
+    <h2>Tabela FIPE</h2>
+  </div>
   <form (ngSubmit)="onResultsVeicul()" [formGroup]="momentForm" class="form-group row container-fluid">
     <div class="col-md-3 my-3" *ngFor="let erro of mensagens.tipo">
       <select
@@ -12,7 +15,7 @@
           'is-valid' : momentForm.get('tipo')?.valid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched),
           'is-invalid': momentForm.get('tipo')?.invalid && (momentForm.get('tipo')?.dirty || momentForm.get('tipo')?.touched)}"
       >
-        <option selected value="">Selecione o Tipo</option>
+        <option selected value="">Selecione o tipo</option>
         <option
           *ngFor="let listaVeiculo of listaVeiculos"
           [value]="listaVeiculo.nome">{{listaVeiculo.nome}}
@@ -35,7 +38,7 @@
           'is-valid' : momentForm.get('marca')?.valid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched),
           'is-invalid': momentForm.get('marca')?.invalid && (momentForm.get('marca')?.dirty || momentForm.get('marca')?.touched)}"
       >
-        <option selected value="">Selecione a Marca</option>
+        <option selected value="">Selecione a marca</option>
         <option
           *ngFor="let marca of marcas"
           [value]="marca.codigo">{{marca.nome}}
@@ -58,7 +61,7 @@
           'is-valid' : momentForm.get('modelo')?.valid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched),
           'is-invalid': momentForm.get('modelo')?.invalid && (momentForm.get('modelo')?.dirty || momentForm.get('modelo')?.touched)}"
       >
-        <option selected value="">Selecione o Modelo</option>
+        <option selected value="">Selecione o modelo</option>
         <option
           *ngFor="let modelo of modelos"
           [value]="modelo.codigo">{{modelo.nome}}
@@ -81,7 +84,7 @@
           'is-valid' : momentForm.get('ano')?.valid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched),
           'is-invalid': momentForm.get('ano')?.invalid && (momentForm.get('ano')?.dirty || momentForm.get('ano')?.touched)}"
         >
-        <option selected value="">Selecione o Ano</option>
+        <option selected value="">Selecione o ano</option>
         <option
           *ngFor="let ano of anos"
           [value]="ano.codigo">{{ano.nome}}</option>
@@ -93,15 +96,16 @@
       </div>
     </div>
     <div class="col-md-9 my-3" *ngFor="let erro of mensagens.valor">
-      <div class="d-flex">
-        <div class="input-group-prepend ">
+      <div class="d-flex" style="position: relative;">
+        <div class="input-group-prepend h-100" style="position: absolute; top: 0; left: 0; z-index: 5;">
           <span class="input-group-text bg-secondary fw-bold h-100" id="basic-addon1">R$</span>
         </div>
         <input
             type="text"
-            class="form-control my-input"
+            class="form-control"
+            style="transform: scale(1);"
             id="valor"
-            value="0.00"
+            value=""
             placeholder="Digite o valor da venda"
             formControlName="valor"
             currencyMask
@@ -111,7 +115,6 @@
               'is-invalid': momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)}"
           >
       </div>
-
         <div class="validation-error">
           <span class="msg-erro" *ngIf="momentForm.get('valor')?.invalid && (momentForm.get('valor')?.dirty || momentForm.get('valor')?.touched)">
             {{erro.menssagem}}
@@ -133,16 +136,12 @@
   </form>
 </div>
 <app-main-result
-id="resultados"
-[marcaResults]="marcaResults"
-[valorVeiculo]="valorVeiculo"
-[statusValor]="statusValor"
-[statusPercentual]="statusPercentual"
-[statusPercentualInt]="statusPercentualInt"
-[statusPercentualText]="statusPercentualText"
-[loading]="loading"
-[desfocarGridResults]="desfocarGridResults"
-
-
-
+  id="resultados"
+  [marcaResults]="marcaResults"
+  [valorVeiculo]="valorVeiculo"
+  [statusValor]="statusValor"
+  [statusPercentual]="statusPercentual"
+  [statusPercentualInt]="statusPercentualInt"
+  [statusPercentualText]="statusPercentualText"
+  [desfocarGridResults]="desfocarGridResults"
 ></app-main-result>
