@@ -250,29 +250,24 @@ export class FormComponent {
       const valorVenda = parseFloat(this.valorFIPE.replace("R$", "").replace(",", "."));
 
       const percentual = ((calcV - valorVenda) / valorVenda) * 100;
-      if(percentual > 2 && percentual == 100) {
-        this.statusValor = `Valor acima do mercado`
+      if(percentual > 10) {
+        this.statusValor = `Valor de venda acima do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = this.statusPercentual
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
-      } else if(percentual < -2) {
-        this.statusValor = `Valor abaixo do mercado`
+      } else if(percentual < -10) {
+        this.statusValor = `Valor de venda abaixo do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
-      } else if(percentual > 100) {
-        this.statusValor = `Valor acima do mercado`
-        this.statusPercentual = parseFloat(percentual.toFixed(1))
-        this.statusPercentualInt = this.statusPercentual
-        this.statusPercentualText = `+${this.statusPercentual.toFixed(1).toString()}`
-
-      }else {
-        this.statusValor = `Valor dentro da média do mercado`
+      } else {
+        this.statusValor = `Valor de venda dentro da média do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
+
       }
       this.valorVeiculo = `R$ ${valor}`
       this.loading = false;
