@@ -250,13 +250,13 @@ export class FormComponent {
       const valorVenda = parseFloat(this.valorFIPE.replace("R$", "").replace(",", "."));
 
       const percentual = ((calcV - valorVenda) / valorVenda) * 100;
-      if(percentual > 10) {
+      if(percentual >= 10) {
         this.statusValor = `Valor de venda acima do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = this.statusPercentual
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
-      } else if(percentual < -10) {
+      } else if(percentual <= -10) {
         this.statusValor = `Valor de venda abaixo do mercado`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
