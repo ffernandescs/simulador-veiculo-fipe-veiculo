@@ -103,15 +103,6 @@ Em seguida digite o comando para rodar a aplicão
 ng server
 ```
 
-
-## Como rodar os testes
-
-Coloque um passo a passo para executar os testes
-
-```
-$ npm test, rspec, etc 
-```
-
 ## Detalhes da aplicação
 
 O projeto simulador consistem em simular o preço de venda de veículos de acordo com a tabela FIPE.
