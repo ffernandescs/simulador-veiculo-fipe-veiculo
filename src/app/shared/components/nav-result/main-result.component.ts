@@ -16,7 +16,6 @@ export class MainResultComponent {
   @Input() statusPercentualInt: number = 0
   @Input() statusPercentualText: string = ''
   @Input() desfocarGridResults: boolean = false;
-  percentualStringTitleCircle: string = '10'
 
   ngOnInit(): void {
   }

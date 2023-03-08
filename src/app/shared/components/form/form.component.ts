@@ -79,7 +79,7 @@ export class FormComponent {
   }
 
   /*Loading para botáo consultar */
-  loading: boolean = false;
+  @Output() loading: boolean = false;
 
   /*Usado junto com o loading para ao clicar em consultar o mesmo desfocar as grid
   ate que os resultados seja carregados. variavel enviado para o componente results*/
@@ -250,14 +250,14 @@ export class FormComponent {
       const valorVenda = parseFloat(this.valorFIPE.replace("R$", "").replace(",", "."));
 
       const percentual = ((calcV - valorVenda) / valorVenda) * 100;
-      if(percentual > 2 && percentual == 100) {
-        this.statusValor = `Valor acima do mercado`
+      if(percentual >= 10) {
+        this.statusValor = `Valor do veículo abaixo da tabela FIPE`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = this.statusPercentual
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()
 
-      } else if(percentual < -2) {
-        this.statusValor = `Valor abaixo do mercado`
+      } else if(percentual <= -10) {
+        this.statusValor = `Valor do veículo abaixo da tabela FIPE`
         this.statusPercentual = parseFloat(percentual.toFixed(1))
         this.statusPercentualInt = parseInt(Math.abs(percentual).toFixed(1))
         this.statusPercentualText = this.statusPercentual.toFixed(1).toString()

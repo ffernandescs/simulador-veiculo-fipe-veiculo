@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { FormComponent } from './shared/components/footer/form/form.component';
+import { FormComponent } from './shared/components/form/form.component';
 import { MainResultComponent } from './shared/components/nav-result/main-result.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
