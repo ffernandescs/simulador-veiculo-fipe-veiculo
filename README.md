@@ -156,7 +156,7 @@ Desde a entrega do desafio, forma feito varios testes com a API e até o momento
 Na data de 07-03-2023 as 17:00 quando fui fazer os testes finais a API esta pedindo autenticação.
 
 - [Error - 1](https://user-images.githubusercontent.com/83374517/223601547-6e778450-6ed0-4226-b3f6-3ba2deb86917.png)
-- [Error - 2](![image](https://user-images.githubusercontent.com/83374517/223602022-15d14c12-5778-4211-9b44-c3bf4c92cf97.png))
+- [Error - 2](https://user-images.githubusercontent.com/83374517/223602022-15d14c12-5778-4211-9b44-c3bf4c92cf97.png)
 
 O ambiente ja esta todo configurado para receber os dados da api, inclusive ja foi testado.
 
